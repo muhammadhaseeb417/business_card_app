@@ -14,13 +14,20 @@ import 'package:business_card_app/screens/otpVerification.dart';
 import 'package:business_card_app/screens/payment_method_screen.dart';
 import 'package:business_card_app/screens/qr_screen.dart';
 import 'package:business_card_app/screens/registrationScreen.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'utils/constants/colors.dart';
 import 'utils/constants/sizes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: true, // Force enable Device Preview
+      builder: (context) => MyApp(), // Wrap your app
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +38,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
       theme: ThemeData(
         brightness: Brightness.light,

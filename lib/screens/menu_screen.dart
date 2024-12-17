@@ -66,6 +66,21 @@ class MenuScreen extends StatelessWidget {
                     title: "Inbox",
                     onTap: () => Navigator.pushNamed(context, "/inbox"),
                   ),
+                  MenuItem(
+                    icon: Icons.person,
+                    title: "Lead",
+                    onTap: () => Navigator.pushNamed(context, "/lead"),
+                  ),
+                  MenuItem(
+                    icon: Icons.payment,
+                    title: "Add Payment",
+                    onTap: () => Navigator.pushNamed(context, "/addPayment"),
+                  ),
+                  MenuItem(
+                    icon: Icons.payment,
+                    title: "Payment Method",
+                    onTap: () => Navigator.pushNamed(context, "/paymentMethod"),
+                  ),
                   MenuItem(icon: Icons.home, title: "Home"),
                   MenuItem(
                       icon: Icons.credit_card,

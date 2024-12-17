@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants/colors.dart';
+
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
 
@@ -44,9 +46,23 @@ class _OtpScreenState extends State<OtpScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -170,7 +186,8 @@ class _OtpScreenState extends State<OtpScreen> {
             ],
           ),
           actions: [
-            Center(
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(

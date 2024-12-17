@@ -1,4 +1,7 @@
+import 'package:business_card_app/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/search_bar_custom.dart';
 
 class NetworkScreen extends StatefulWidget {
   const NetworkScreen({super.key});
@@ -42,12 +45,30 @@ class _NetworkScreenState extends State<NetworkScreen>
         .toList();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           'Network Dashboard',
@@ -59,27 +80,7 @@ class _NetworkScreenState extends State<NetworkScreen>
       body: Column(
         children: [
           // Search Bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
-              },
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: const Icon(Icons.search),
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
+          SearchBarCustom(),
 
           // TabBar
           Container(
@@ -118,9 +119,57 @@ class _NetworkScreenState extends State<NetworkScreen>
     return _filteredContacts.isEmpty
         ? const Center(child: Text("No contacts found"))
         : ListView.builder(
-            itemCount: _filteredContacts.length,
+            itemCount: 8, // Number of profiles
             itemBuilder: (context, index) {
-              return _buildContactCard(_filteredContacts[index], status);
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Container(
+                  height: 80,
+                  width: double.maxFinite,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset("assets/profile2.png",
+                              height: 35, width: 35),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Ralph Edwards",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Equinor - Oseberg C-19",
+                                  style: TextStyle(color: Colors.grey)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color:
+                              status == "Pending" ? Colors.black : Colors.green,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          status,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
           );
   }

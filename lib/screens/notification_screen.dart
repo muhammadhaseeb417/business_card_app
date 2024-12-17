@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants/colors.dart';
+
 class NotificationApp extends StatelessWidget {
   const NotificationApp({Key? key}) : super(key: key);
 
@@ -20,13 +22,32 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.arrow_back, color: Colors.black)),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text(
           "Notification",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants/colors.dart';
 import '../widgets/reusableTextFormField.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -8,6 +9,30 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -15,14 +40,6 @@ class RegistrationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Back Arrow
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios, size: 28),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 10),
               // Title
               const Text(
                 "Sign up",

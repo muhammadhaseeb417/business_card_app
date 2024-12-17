@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants/colors.dart';
+
 class InboxScreen extends StatefulWidget {
   @override
   State<InboxScreen> createState() => _InboxScreenState();
@@ -18,13 +20,31 @@ class _InboxScreenState extends State<InboxScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.arrow_back),
-            color: Colors.black),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text(
           "Inbox",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -188,22 +208,30 @@ class ChatDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userName = (ModalRoute.of(context)?.settings.arguments ??
-        "Unknown User") as String;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),
-        title: Text(userName, style: const TextStyle(color: Colors.black)),
+        title: Text("Inbox"),
         actions: const [
+          const Icon(Icons.call, color: Colors.black),
           Icon(Icons.search, color: Colors.black),
           SizedBox(width: 16),
         ],
       ),
       body: Column(
         children: [
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text("Today"),
+          ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16),
@@ -240,15 +268,23 @@ class ChatDetailScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "Message",
+                      hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 8),
-                const CircleAvatar(
-                  backgroundColor: Colors.deepOrangeAccent,
-                  child: Icon(Icons.mic, color: Colors.white),
+                Row(
+                  //  spacing: 10,
+                  children: [
+                    Icon(Icons.pinch_sharp),
+                    const CircleAvatar(
+                      backgroundColor: Colors.deepOrangeAccent,
+                      child: Icon(Icons.mic, color: Colors.white),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -277,11 +313,22 @@ class ChatBubble extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSender ? Colors.deepOrangeAccent : Colors.black,
-        borderRadius: BorderRadius.circular(12),
-      ),
+          color: Colors.black,
+          borderRadius: !isSender
+              ? BorderRadius.only(
+                  topLeft: Radius.circular(0),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(10),
+                )
+              : BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(0),
+                )),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             text,

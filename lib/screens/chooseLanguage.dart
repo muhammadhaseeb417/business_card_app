@@ -1,3 +1,4 @@
+import 'package:business_card_app/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChooseLanguage extends StatefulWidget {
@@ -28,7 +29,22 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },

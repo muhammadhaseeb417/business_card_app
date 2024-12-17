@@ -1,3 +1,5 @@
+import 'package:business_card_app/utils/constants/colors.dart';
+import 'package:business_card_app/widgets/roundedReusableTextField.dart';
 import 'package:flutter/material.dart';
 
 class QRShareScreen extends StatefulWidget {
@@ -22,143 +24,287 @@ class _QRShareScreenState extends State<QRShareScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Container(
+            padding: EdgeInsets.only(left: 7),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: TColors.greyCustomColor), // Custom border color
+              borderRadius:
+                  BorderRadius.circular(8), // Optional: Add rounded corners
+            ),
+            alignment:
+                Alignment.center, // Center the child within the container
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         title: Text(
-          !offlineMode ? 'Share' : "Offline Mode",
+          offlineMode ? 'Online' : "Offline Mode",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Scan QR Code',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      'Offline Mode',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Transform.scale(
-                      scale: 0.7,
-                      child: Switch(
-                        value: offlineMode,
-                        onChanged: (value) {
-                          setState(() {
-                            offlineMode = !offlineMode;
-                          });
-                        },
-                        activeTrackColor: Color(0xFFC55536),
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            // QR Code
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFC55536), width: 2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const Icon(Icons.qr_code, size: 200, color: Colors.black),
-            ),
-            const SizedBox(height: 20),
-            // Download Link
-            TextFormField(
-              initialValue: 'http://192.168.20.250:5000/',
-              decoration: InputDecoration(
-                labelText: 'Download Link',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                suffixIcon: Container(
-                  margin: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFC55536),
-                    shape: BoxShape.circle,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Scan QR Code',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  child: const Icon(Icons.copy, color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Dropdown for platform selection
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: selectedPlatform,
-                underline: const SizedBox(),
-                items: platforms.map((String platform) {
-                  return DropdownMenuItem(
-                    value: platform,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.share, color: Colors.black),
-                        const SizedBox(width: 10),
-                        Text(platform),
-                      ],
-                    ),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedPlatform = value!;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Download Button
-            !offlineMode
-                ? SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                  Row(
+                    children: [
+                      Text(
+                        offlineMode ? "Online Mode" : 'Offline Mode',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Transform.scale(
+                        scale: 0.7,
+                        child: Switch(
+                          value: offlineMode,
+                          onChanged: (value) {
+                            setState(() {
+                              offlineMode = !offlineMode;
+                            });
+                          },
+                          activeTrackColor: Color(0xFFC55536),
+                          inactiveThumbColor: Colors.white,
+                          inactiveTrackColor: Colors.black,
                         ),
                       ),
-                      onPressed: () {
-                        // Handle download action
-                      },
-                      child: const Text(
-                        'Download',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // QR Code
+              Container(
+                height: 200,
+                width: 200,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xFFC55536), width: 2),
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                        image: AssetImage("assets/qrcode.png"),
+                        fit: BoxFit.contain)),
+              ),
+              const SizedBox(height: 30),
+              // Download Link
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Download Link",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: Roundedreusabletextfield(
+                        fieldLabel: "http://192.168.20.250:5000/"),
+                  ),
+                  SizedBox(width: 15),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(300),
+                            border: Border.all(
+                              color: TColors.greyCustomColor,
+                            )),
+                        child: Image.asset("assets/solar_copy.png", height: 24),
                       ),
-                    ),
+                      SizedBox(width: 10),
+                      !offlineMode
+                          ? Container(
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(300),
+                                  border: Border.all(
+                                    color: TColors.greyCustomColor,
+                                  )),
+                              child: Icon(
+                                Icons.share,
+                                color: TColors.orangeCustomColor,
+                              ))
+                          : SizedBox(),
+                    ],
                   )
-                : SizedBox(),
-          ],
+                ],
+              ),
+
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(300),
+                    border: Border.all(
+                      color: TColors.greyCustomColor,
+                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(500),
+                              border: Border.all(color: Colors.grey)),
+                          child: Image.asset("assets/gmail.png", height: 17),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "Generate Email Signature",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.share),
+                    // Image.asset("assets/payment.png", height: 34),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              offlineMode
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(300),
+                          border: Border.all(
+                            color: TColors.greyCustomColor,
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset("assets/profile1.png", height: 40),
+                              SizedBox(width: 10),
+                              Text(
+                                "Generate Email Signature",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Icon(Icons.share),
+                          Image.asset("assets/payment.png", height: 30),
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
+
+              !offlineMode
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(300),
+                          border: Border.all(
+                            color: TColors.greyCustomColor,
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(500),
+                                    border: Border.all(color: Colors.grey)),
+                                child: Image.asset("assets/wallet.png",
+                                    height: 17),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Encodes a Digital VCard",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.share),
+                          // Image.asset("assets/payment.png", height: 34),
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+              !offlineMode
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Inactive Profile",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: 20),
+
+              offlineMode
+                  ? ElevatedButton(onPressed: () {}, child: Text("Download"))
+                  : SizedBox(),
+              !offlineMode
+                  ? ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Order NFC Card",
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ))
+                  : SizedBox(),
+              SizedBox(height: 15),
+              !offlineMode
+                  ? ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Activate Profile",
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ))
+                  : SizedBox(),
+            ],
+          ),
         ),
       ),
     );

@@ -10,10 +10,10 @@ class Onboardingscreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
-            spacing: 20,
+            //    spacing: 20,
             children: [
               SizedBox(
-                height: 400,
+                height: 500,
               ),
               Text("Explore the app",
                   style: Theme.of(context).textTheme.headlineLarge),
@@ -34,6 +34,7 @@ class Onboardingscreen extends StatelessWidget {
                         Navigator.pushNamed(context, "/chosseLanguage");
                       },
                       child: Text("Login"))),
+              SizedBox(height: 10),
               SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
